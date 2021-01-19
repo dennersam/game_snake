@@ -9,6 +9,7 @@ snake[0] = {
 }
 
 let direction = "right";
+
 let food = {
     x: Math.floor(Math.random() * 15 + 1) * box,
     y: Math.floor(Math.random() * 15 + 1) * box
