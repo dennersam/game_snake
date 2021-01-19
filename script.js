@@ -15,13 +15,13 @@ let food = {
 }
 
 function criarBG(){
-    context.fillStyle = "lightgreen";
+    context.fillStyle = "#D3D3D3";
     context.fillRect(0, 0, 16 * box, 16 * box);
 }
 
 function criarCobrinha(){
     for(i=0;i < snake.length; i++){
-        context.fillStyle = "green";
+        context.fillStyle = "#00008B";
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
 }
@@ -48,10 +48,18 @@ function iniciarJogo(){
     if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
     if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
 
+    //game over ao se chocar
+    for(i=1; i < snake.length; i++){
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+            clearInterval(jogo);
+            alert('Game Over :(');
+        }
+    }
 
     criarBG();
     criarCobrinha();
     drawFood();
+
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
@@ -60,7 +68,15 @@ function iniciarJogo(){
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    snake.pop();
+    //comendo a comida
+    if(snakeX != food.x || snakeY != food.y){
+        snake.pop();
+    } else {
+        food.x = Math.floor(Math.random() * 15 + 1) * box;
+        food.y = Math.floor(Math.random() * 15 + 1) * box;
+    }
+
+    //snake.pop();
 
     let newHead = {
         x: snakeX,
